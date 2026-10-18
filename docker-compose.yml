@@ -1,8 +1,8 @@
 services:
   wordpress:
     image: wordpress:php8.2-apache
-    cpus: 1.0
-    mem_limit: 1g
+    cpus: 0.25
+    mem_limit: 500m
     depends_on:
       db:
         condition: service_healthy
