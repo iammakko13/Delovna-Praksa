@@ -14,7 +14,8 @@ services:
       WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX:-wp_}
     volumes:
       - ./.stack-data/wordpress:/var/www/html
-
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:ro
+      
   db:
     image: mariadb:11
     cpus: 0.25
