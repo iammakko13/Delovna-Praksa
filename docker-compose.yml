@@ -1,8 +1,8 @@
 services:
   wordpress:
     image: wordpress:php8.2-apache
-    cpus: 0.35
-    mem_limit: 500m
+    cpus: 0.3
+    mem_limit: 450m
     depends_on:
       db:
         condition: service_healthy
@@ -41,7 +41,7 @@ services:
   diag:
     image: alpine
     cpus: 0.05
-    mem_limit: 64m
+    mem_limit: 50m
     volumes:
       - ./.stack-data:/data:ro
     command: >
