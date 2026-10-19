@@ -1,7 +1,7 @@
 services:
   wordpress:
     image: wordpress:php8.2-apache
-    cpus: 0.5
+    cpus: 0.25
     mem_limit: 500m
     depends_on:
       db:
