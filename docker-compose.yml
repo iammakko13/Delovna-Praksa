@@ -12,10 +12,14 @@ services:
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
       WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX:-wp_}
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_DEBUG_LOG', true);
+        define('WP_DEBUG_DISPLAY', false);
     volumes:
       - ./.stack-data/wordpress:/var/www/html
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:ro
-      
+
   db:
     image: mariadb:11
     cpus: 0.15
@@ -33,3 +37,17 @@ services:
       timeout: 5s
       retries: 12
       start_period: 30s
+
+  diag:
+    image: alpine
+    cpus: 0.05
+    mem_limit: 64m
+    volumes:
+      - ./.stack-data:/data:ro
+    command: >
+      sh -c "df -h /data;
+      du -sh /data/wordpress /data/mariadb;
+      du -sh /data/wordpress/wp-content/*;
+      ls -la /data/wordpress/wp-content/ai1wm-backups;
+      tail -n 50 /data/wordpress/wp-content/debug.log;
+      sleep 3600"
